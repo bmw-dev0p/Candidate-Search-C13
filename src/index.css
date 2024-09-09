@@ -38,10 +38,10 @@ body {
   min-height: 100vh;
 }
 
-h1 {
+/* h1 {
   font-size: 3.2em;
   line-height: 1.1;
-}
+} */
 
 button {
   border-radius: 8px;
@@ -118,3 +118,58 @@ tbody tr:nth-child(odd) {
   width: 80vw;
   table-layout: fixed;
 }
+
+/* GENERAL STYLES */
+.bigText {
+  font-size: 4em;
+  font-weight: 700;
+  text-align: center !important;
+}
+
+.userName {
+  font-size: 2.5em;
+  font-weight: 700;
+  /* text-align: center !important; */
+}
+
+p {
+  font-size: 1.25em;
+  font-weight: 400;
+}
+/* SAVED CANDIDATE STYLES  */
+.grid-container {
+  display: flex;
+  flex-direction: column; /* Keeps the cards stacked vertically */
+  align-items: center;
+  width: 75%; /* Sets the width of the card container */
+  margin: 0 auto;
+}
+
+.candidate-card {
+  display: flex;
+  flex-direction: row; /* Horizontal alignment of image and text */
+  align-items: center;
+  width: 100%;
+  background-color: black;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.candidate-avatar {
+  width: auto;
+  height: 100%;
+  border-radius: 50%;
+  margin-right: 20px; /* Adds space between image and text */
+}
+
+.candidate-info {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  text-align: left;
+  padding-left: 100px;
+}
+
+
