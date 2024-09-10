@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
+// src/components/CandidateSearch.tsx
+import { useState } from 'react';
 import { searchGithub, searchGithubUser } from '../api/API';
+import advancedSearch from './advancedSearch';
 import type Candidate from '../interfaces/Candidate.interface';
 
 const CandidateSearch = () => {
-  // create state to store the current candidate
-  // octocat is the default candidate
   const [currentCandidate, setCurrentCandidate] = useState<Candidate>({
     id: 583231,
     login: 'octocat',
@@ -14,22 +14,16 @@ const CandidateSearch = () => {
     company: '@github',
     bio: '',
   });
+  const [loadingStatus, setLoadingStatus] = useState<string>('Ready to search');
 
-  // Function to fetch a random user
   const fetchCandidate = async () => {
+    setLoadingStatus('Searching...');
     try {
-      const randomUsers = await searchGithub(); // fetch random user(s) from the API
-      console.log('Fetched User:', randomUsers); // check the data 
-      // so... I see that the above line returns an array of users (30)
-      // But I felt that looping over the array 30 times to get a single user is not efficient
-      // So my solution is just to use the first user, and recall fetchCandidate each button click
-      const randomUserLogin = randomUsers[0].login; // get the login of the random user
-      console.log('Fetched User Login:', randomUserLogin); // check the data 
-      const userData = await searchGithubUser(randomUserLogin);  // Feed login to new api function
-      console.log('Fetched User Data:', userData); // check 
+      const randomUsers = await searchGithub();
+      const randomUserLogin = randomUsers[0].login;
+      const userData = await searchGithubUser(randomUserLogin);
 
       if (userData) {
-        // format the data response to the Candidate type
         const formattedCandidate: Candidate = {
           id: userData.id,
           login: userData.login,
@@ -40,22 +34,29 @@ const CandidateSearch = () => {
           bio: userData.bio || 'Bio not provided',
         };
         setCurrentCandidate(formattedCandidate);
+        setLoadingStatus('User found');
+      } else {
+        setLoadingStatus('No suitable user found');
       }
     } catch (error) {
       console.error('Error fetching candidate:', error);
+      setLoadingStatus('Error fetching user');
     }
   };
 
-  // Fetch user when the component mounts ?
-  useEffect(() => {
-    // fetchCandidate()
-  }, []);
-  // decided to leave this out bc i wanted octocat to be default, probably better way 
+  const handleAdvancedSearch = async () => {
+    setLoadingStatus('Searching...');
+    const candidate = await advancedSearch();
+    if (candidate) {
+      setCurrentCandidate(candidate);
+      setLoadingStatus('User found');
+    } else {
+      setLoadingStatus('No suitable user found');
+    }
+  };
 
   const saveCandidate = () => {
-    // initialize an candidate array for storage
     let savedCandidates: Candidate[] = [];
-    // Retrieve existing saved candidates 
     const storedCandidates = localStorage.getItem('savedCandidates');
 
     if (storedCandidates) {
@@ -63,14 +64,12 @@ const CandidateSearch = () => {
         savedCandidates = JSON.parse(storedCandidates);
       } catch (error) {
         console.error('Error parsing local storage data:', error);
-        savedCandidates = []; // reset to empty if parsing fails
+        savedCandidates = [];
       }
     }
 
-    // Add the current candidate to the saved list
     savedCandidates.push(currentCandidate);
 
-    // Update local storage
     try {
       localStorage.setItem('savedCandidates', JSON.stringify(savedCandidates));
       console.log('Candidate saved successfully:', currentCandidate);
@@ -78,7 +77,6 @@ const CandidateSearch = () => {
       console.error('Error saving to local storage:', error);
     }
   };
-
 
   return (
     <div>
@@ -101,12 +99,15 @@ const CandidateSearch = () => {
           <div className="label">Search Users</div>
         </div>
         <div>
+          <button onClick={handleAdvancedSearch} className="button advanced">*</button>
+          <div className="label">Advanced Search</div>
+        </div>
+        <div>
           <button onClick={saveCandidate} className="button save">+</button>
           <div className="label">Save User</div>
         </div>
       </div>
-
-
+      <div>{loadingStatus}</div>
     </div>
   );
 };
