@@ -21,8 +21,10 @@ As a github user myself, I find the community of open-source coding to be revolu
   <br/>Step 7: Once on the website, use the buttons to create your own list of users
 
 ## Usage:
-  Wepage home + navigation top right
-  <br/>![home](https://github.com/bmw-dev0p/React-Portfolio-C12/blob/main/src/assets/usage1.jpg?raw=true)
+  Landing page displaying Search and Save buttons, navigation
+  <br/>![home](https://github.com/bmw-dev0p/Candidate-Search-C13/blob/main/src/assets/usage1.jpg?raw=true)
+  <br/> Saved candidate table
+  <br/>![home](https://github.com/bmw-dev0p/Candidate-Search-C13/blob/main/src/assets/usage2.jpg?raw=true)
 
 ## Features:
 ### Coding Language(s): 
