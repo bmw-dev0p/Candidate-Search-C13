@@ -14,6 +14,7 @@
 }
 
 a {
+  font-size: 125%;
   font-weight: 500;
   color: #646cff;
   text-decoration: inherit;
@@ -43,7 +44,7 @@ body {
   line-height: 1.1;
 } */
 
-button {
+/* button {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -60,7 +61,7 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
+} */
 
 @media (prefers-color-scheme: light) {
   :root {
@@ -103,6 +104,8 @@ tbody tr:nth-child(odd) {
 .nav-item {
   padding: 0 0.5rem;
   list-style: none;
+  /* added to match the example (side by side) */
+  display: inline-block;
 }
 
 .nav-link {
@@ -135,6 +138,9 @@ tbody tr:nth-child(odd) {
 p {
   font-size: 1.25em;
   font-weight: 400;
+}
+ul {
+  list-style-type: none;
 }
 /* SAVED CANDIDATE STYLES  */
 .grid-container {
@@ -172,4 +178,37 @@ p {
   padding-left: 100px;
 }
 
+/* BUTTONS  */
+.button-container {
+  display: flex;
+  justify-content: space-around; /* Space buttons evenly */
+  align-items: center;
+  margin: 40px 0; /* Optional margin for spacing */
+}
 
+.button {
+  border: none;
+  border-radius: 50%;
+  width: 150px;
+  color: white;
+  font-size: 100px; /* Bigger + and - */
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.button.fetch {
+  background-color: red;
+}
+
+.button.save {
+  background-color: green;
+}
+
+.label {
+  font-size: 28px;
+  text-align: center;
+  color: white;
+}

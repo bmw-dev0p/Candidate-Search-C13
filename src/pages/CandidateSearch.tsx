@@ -28,7 +28,6 @@ const CandidateSearch = () => {
       const userData = await searchGithubUser(randomUserLogin);  // Feed login to new api function
       console.log('Fetched User Data:', userData); // check 
 
-
       if (userData) {
         // format the data response to the Candidate type
         const formattedCandidate: Candidate = {
@@ -48,14 +47,17 @@ const CandidateSearch = () => {
   };
 
   // Fetch user when the component mounts ?
-  // useEffect(() => {fetchCandidate()}, []);
+  useEffect(() => {
+    // fetchCandidate()
+  }, []);
+  // decided to leave this out bc i wanted octocat to be default, probably better way 
 
   const saveCandidate = () => {
     // initialize an candidate array for storage
     let savedCandidates: Candidate[] = [];
     // Retrieve existing saved candidates 
     const storedCandidates = localStorage.getItem('savedCandidates');
-    
+
     if (storedCandidates) {
       try {
         savedCandidates = JSON.parse(storedCandidates);
@@ -64,10 +66,10 @@ const CandidateSearch = () => {
         savedCandidates = []; // reset to empty if parsing fails
       }
     }
-    
+
     // Add the current candidate to the saved list
     savedCandidates.push(currentCandidate);
-    
+
     // Update local storage
     try {
       localStorage.setItem('savedCandidates', JSON.stringify(savedCandidates));
@@ -76,25 +78,35 @@ const CandidateSearch = () => {
       console.error('Error saving to local storage:', error);
     }
   };
-  
+
 
   return (
     <div>
       <h1>Candidate Search</h1>
+      <div>
+        <img
+          src={currentCandidate.avatar_url}
+          alt={currentCandidate.login}
+          style={{ width: '500px', height: '500px' }}
+        />
+        <h2>{currentCandidate.login}</h2>
+        <p>Location: {currentCandidate.location}</p>
+        <p>Email: {currentCandidate.email}</p>
+        <p>Company: {currentCandidate.company}</p>
+        <p>Bio: {currentCandidate.bio}</p>
+      </div>
+      <div className="button-container">
         <div>
-          <img
-            src={currentCandidate.avatar_url}
-            alt={currentCandidate.login}
-            style={{ width: '500px', height: '500px' }}
-          />
-          <h2>{currentCandidate.login}</h2>
-          <p><strong>Location:</strong> {currentCandidate.location}</p>
-          <p><strong>Email:</strong> {currentCandidate.email}</p>
-          <p><strong>Company:</strong> {currentCandidate.company}</p>
-          <p><strong>Bio:</strong> {currentCandidate.bio}</p>
+          <button onClick={fetchCandidate} className="button fetch">-</button>
+          <div className="label">Search Users</div>
         </div>
-      <button onClick={fetchCandidate}>Fetch New Candidate</button> {/* Button to fetch a new user */}
-      <button onClick={saveCandidate}>Save Candidate</button> {/* Button to save user */}
+        <div>
+          <button onClick={saveCandidate} className="button save">+</button>
+          <div className="label">Save User</div>
+        </div>
+      </div>
+
+
     </div>
   );
 };
