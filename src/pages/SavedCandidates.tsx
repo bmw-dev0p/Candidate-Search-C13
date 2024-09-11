@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import type Candidate from '../interfaces/Candidate.interface';
 import '../index.css';
 
