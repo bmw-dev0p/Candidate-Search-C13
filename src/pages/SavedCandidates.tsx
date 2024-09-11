@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import type Candidate from '../interfaces/Candidate.interface';
-import '../index.css'
+import '../index.css';
 
 const SavedCandidates = () => {
-  //initialize state 
   const [savedCandidates, setSavedCandidates] = useState<Candidate[]>([]);
 
-  // Fetch saved candidates from localStorage when the component mounts
   useEffect(() => {
     const storedCandidates = localStorage.getItem('savedCandidates');
     if (storedCandidates) {
@@ -18,34 +16,52 @@ const SavedCandidates = () => {
     }
   }, []);
 
- return (
-  <>
-    <h1 className="bigText">Potential Candidates</h1>
-    <div className="grid-container">
-      {savedCandidates.length > 0 ? (
-        savedCandidates.map((candidate) => (
-          <div key={candidate.id} className="candidate-card">
-            <img
-              src={candidate.avatar_url}
-              alt={candidate.login}
-              className="candidate-avatar"
-            />
-            <div className="candidate-info">
-              <h2 className='userName'>{candidate.login}</h2>
-              <p><strong>Location:</strong> {candidate.location}</p>
-              <p><strong>Email:</strong> {candidate.email}</p>
-              <p><strong>Company:</strong> {candidate.company}</p>
-              <p><strong>Bio:</strong> {candidate.bio}</p>
-            </div>
-          </div>
-        ))
-      ) : (
-        <p>No candidates saved yet.</p>
-      )}
-    </div>
-  </>
-);
+  const removeCandidate = (id: number) => {
+    const updatedCandidates = savedCandidates.filter(candidate => candidate.id !== id);
+    setSavedCandidates(updatedCandidates);
+    localStorage.setItem('savedCandidates', JSON.stringify(updatedCandidates));
+  };
 
+  return (
+    <>
+      <h1 className="bigText">Potential Candidates</h1>
+      <div className="grid-container">
+        {savedCandidates.length > 0 ? (
+          savedCandidates.map((candidate) => (
+            <div key={candidate.id} className="grid-row">
+              <div className="grid-item avatar">
+                <img
+                  src={candidate.avatar_url}
+                  alt={candidate.login}
+                  className="candidate-avatar"
+                />
+              </div>
+              <div className="grid-item alt">
+                <h2>{candidate.login}</h2>
+              </div>
+              <div className="grid-item ">
+                <p><strong>Location:</strong> {candidate.location}</p>
+              </div>
+              <div className="grid-item alt">
+                <p><strong>Email:</strong> {candidate.email}</p>
+              </div>
+              <div className="grid-item">
+                <p><strong>Company:</strong> {candidate.company}</p>
+              </div>
+              <div className="grid-item alt">
+                <p><strong>Bio:</strong> {candidate.bio}</p>
+              </div>
+              <div className="grid-item remove-button">
+                <button onClick={() => removeCandidate(candidate.id)}>Remove</button>
+              </div>
+            </div>
+          ))
+        ) : (
+          <p>No candidates saved yet.</p>
+        )}
+      </div>
+    </>
+  );
 };
 
 export default SavedCandidates;

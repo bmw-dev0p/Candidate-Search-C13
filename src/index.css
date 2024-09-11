@@ -168,38 +168,55 @@ ul {
 /* SAVED CANDIDATE STYLES  */
 .grid-container {
   display: flex;
-  flex-direction: column; /* Keeps the cards stacked vertically */
-  align-items: center;
-  width: 75%; /* Sets the width of the card container */
-  margin: 0 auto;
-}
-
-.candidate-card {
-  display: flex;
-  flex-direction: row; /* Horizontal alignment of image and text */
-  align-items: center;
-  width: 100%;
-  background-color: black;
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.candidate-avatar {
-  width: auto;
-  height: 100%;
-  border-radius: 50%;
-  margin-right: 20px; /* Adds space between image and text */
-}
-
-.candidate-info {
-  display: flex;
   flex-direction: column;
+  gap: 20px;
   width: 100%;
-  text-align: left;
-  padding-left: 100px;
 }
+
+.grid-row {
+  display: inline-grid;
+  /* just learned this.. but basically making 7 boxes, each with 1 (equal) fraction of the space  */
+  grid-template-columns: repeat(7, 1fr);  
+  background-color: rgb(46, 46, 46);
+  margin: 10px 25px;
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.5);
+  align-items: center;
+}
+
+.grid-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  color: white;
+  background-color: black;
+  height: 200px;
+}
+
+.alt {
+  background-color: rgb(62, 62, 62);
+}
+
+.avatar img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+
+.remove-button button {
+  height: 125px;
+  width: 125px;
+  border-radius: 50%;
+  padding: 10px;
+  font-size: 125% ;
+  background-color: red;
+  color: white;
+}
+
+.remove-button button:hover {
+  background-color: darkred;
+}
+
 
 /* BUTTONS  */
 .button-container {
